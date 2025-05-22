@@ -1,0 +1,7 @@
+# General ignores
+.vscode/
+.devcontainer/
+
+# ESP IDF ignores
+build/
+sdkconfig.old
