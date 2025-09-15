@@ -1,7 +1,5 @@
 # Indoor Environment monitor
 
----
-
 ## Description
 This is a project I created to monitor conditions of living spaces. The main inspiration behind this project was to monitor indoor air quality in order to know when
 to turn on air purifiers. This helps to protect people who are sensitive to poor air quality.
