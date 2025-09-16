@@ -15,7 +15,7 @@
 #define I2C_MASTER_TIMEOUT_MS       1000
 
 
-extern "C" void initI2cBus(i2c_master_bus_handle_t *bus_handle) {
+void initI2cBus(i2c_master_bus_handle_t *bus_handle) {
     
     i2c_master_bus_config_t bus_config = {
         .i2c_port = I2C_MASTER_NUM,
@@ -23,12 +23,12 @@ extern "C" void initI2cBus(i2c_master_bus_handle_t *bus_handle) {
         .scl_io_num = (gpio_num_t)I2C_MASTER_SCL_IO,
         .clk_source = I2C_CLK_SRC_DEFAULT,
         .glitch_ignore_cnt = 7,
-        .flags {.enable_internal_pullup = true}
+        .flags = {.enable_internal_pullup = true}
     };
     ESP_ERROR_CHECK(i2c_new_master_bus(&bus_config, bus_handle));
 }
 
-extern "C" void addI2cDevice(i2c_master_bus_handle_t *bus_handle, i2c_master_dev_handle_t *dev_handle) {
+void addI2cDevice(i2c_master_bus_handle_t *bus_handle, i2c_master_dev_handle_t *dev_handle) {
     i2c_device_config_t dev_config = {
         .dev_addr_length = I2C_ADDR_BIT_LEN_7,
         .device_address = BME280_I2C_ADDR,
@@ -37,7 +37,7 @@ extern "C" void addI2cDevice(i2c_master_bus_handle_t *bus_handle, i2c_master_dev
     ESP_ERROR_CHECK(i2c_master_bus_add_device(*bus_handle, &dev_config, dev_handle));
 }
 
-extern "C" void app_main(void)
+void app_main(void)
 {
     i2c_master_bus_handle_t bus_handle;
     i2c_master_dev_handle_t bme280_handle;
@@ -46,15 +46,14 @@ extern "C" void app_main(void)
     addI2cDevice(&bus_handle, &bme280_handle);
     printf("Done initializing.\n");
 
-    BME280 bme280 = BME280();
-    bme280.init(&bme280_handle);
+    bme280_init(&bme280_handle);
 
     while (1) {
         printf("Reading data...\n");
-        bme280.readData();
+        bme280_readData();
         printf("Done reading data.\n");
         printf("Temperature: %.2fC, Humidity: %.2fRH, Pressure: %.2fPa\n",
-            bme280.data.temp, bme280.data.hum, bme280.data.press);
+            bme280data.temp, bme280data.hum, bme280data.press);
         
         vTaskDelay(5000 / portTICK_PERIOD_MS);
     }
