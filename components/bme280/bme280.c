@@ -44,6 +44,16 @@ void bme280_init(i2c_master_dev_handle_t *dev_handle) {
     writeConfig();
     printf("Config written\n");
 
+    // Configure
+    config.id = 0x60;
+    config.osrs_h = sample_x1;
+    config.osrs_t = sample_x1;
+    config.osrs_p = sample_x1;
+    config.mode = sleep;
+    config.t_sb = sb1000;
+    config.filter = filter_off;
+    config.spi32_en = 0;
+    
     bme280data.temp = 0.0f;
     bme280data.press = 0.0f;
     bme280data.hum = 0.0f;
@@ -110,16 +120,6 @@ static void readCalibData() {
 Write changes to configuration registers. Configuration is stored in the "config" struct.
 */
 static void writeConfig() {
-    // Configure
-    config.id = 0x60;
-    config.osrs_h = sample_x1;
-    config.osrs_t = sample_x1;
-    config.osrs_p = sample_x1;
-    config.mode = sleep;
-    config.t_sb = sb1000;
-    config.filter = filter_off;
-    config.spi32_en = 0;
-
     // Write configuration
     writeRegister(BME280_REG_CTRLHUM, config.osrs_h);
     uint8_t temp = config.osrs_t << 5 | config.osrs_p << 2 | config.mode; // ctrl_meas
