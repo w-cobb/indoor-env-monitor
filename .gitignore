@@ -2,6 +2,9 @@
 .vscode/
 .devcontainer/
 
+# KiCAD ignores
+*-backups
+
 # ESP IDF ignores
 build/
 sdkconfig.old
