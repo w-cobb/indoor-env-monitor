@@ -5,6 +5,7 @@
 #include "driver/i2c_master.h"
 #include "driver/i2c.h"
 #include "../components/bme280/bme280.h"
+#include "../components/pms5003/pms5003.h"
 
 #define I2C_MASTER_SCL_IO           CONFIG_I2C_MASTER_SCL
 #define I2C_MASTER_SDA_IO           CONFIG_I2C_MASTER_SDA
@@ -16,7 +17,6 @@
 
 
 void initI2cBus(i2c_master_bus_handle_t *bus_handle) {
-    
     i2c_master_bus_config_t bus_config = {
         .i2c_port = I2C_MASTER_NUM,
         .sda_io_num = (gpio_num_t)I2C_MASTER_SDA_IO,
@@ -47,13 +47,21 @@ void app_main(void)
     printf("Done initializing.\n");
 
     bme280_init(&bme280_handle);
+    pms5003_init();
 
     while (1) {
         printf("Reading data...\n");
-        bme280_readData();
+        bme280_read_data();
+        pms5003_read_data();
         printf("Done reading data.\n");
         printf("Temperature: %.2fC, Humidity: %.2fRH, Pressure: %.2fPa\n",
             bme280data.temp, bme280data.hum, bme280data.press);
+        printf("PM1.0 Concentration: %u ug/m^3, 1.0 um Particle Count: %u\n", 
+            pms5003Data.pm1_0_conc_atmos, pms5003Data.particles_1_0);
+        printf("PM2.5 Concentration: %u ug/m^3, 2.5 um Particle Count: %u\n", 
+            pms5003Data.pm2_5_conc_atmos, pms5003Data.particles_2_5);
+        printf("PM10.0 Concentration: %u ug/m^3, 10.0 um Particle Count: %u\n", 
+            pms5003Data.pm10_conc_atmos, pms5003Data.particles_10);
         
         vTaskDelay(5000 / portTICK_PERIOD_MS);
     }
