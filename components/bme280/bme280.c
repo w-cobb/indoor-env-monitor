@@ -62,7 +62,7 @@ void bme280_init(i2c_master_dev_handle_t *dev_handle) {
 /*
 Read data into the data struct.
 */
-void bme280_readData() {
+void bme280_read_data() {
     // Set sensor mode to forced and wait for data to be available.
     printf("Entering forced mode\n");
     config.mode = forced;

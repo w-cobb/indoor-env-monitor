@@ -64,9 +64,7 @@ enum sensor_mode
     normal = 0x3,
 };
 
-/*
-test
-*/
+
 enum standby_time
 {
     sb0_5 = 0x0,
@@ -136,7 +134,7 @@ typedef int64_t BME280_S64_t;
 extern bme280_data bme280data;
 
 void bme280_init(i2c_master_dev_handle_t *dev_handle);
-void bme280_readData();
+void bme280_read_data();
 
 
 
