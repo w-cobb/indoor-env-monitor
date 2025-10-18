@@ -4,6 +4,11 @@
 	(generator_version "9.0")
 	(uuid "029ef117-c321-4982-b9a5-afe1b91e4614")
 	(paper "A4")
+	(title_block
+		(title "Indoor Environment Monitor")
+		(date "2025-10-17")
+		(rev "1.0")
+	)
 	(lib_symbols
 		(symbol "1a_Regulator_Linear:TLV760"
 			(exclude_from_sim no)
@@ -13166,7 +13171,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp yes)
+		(dnp no)
 		(uuid "c3017051-d5e9-43b1-b047-0cd63ff19388")
 		(property "Reference" "J2"
 			(at 199.39 86.3601 0)
